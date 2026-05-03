@@ -50,10 +50,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1ecf853080d42d0428f24076b1b4bedc, type: 3}
       propertyPath: m_Name
-      value: minecraft_water
+      value: Water
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ecf853080d42d0428f24076b1b4bedc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 466183451423335947}
   m_SourcePrefab: {fileID: 100100000, guid: 1ecf853080d42d0428f24076b1b4bedc, type: 3}
+--- !u!1 &3034720999393336073 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ecf853080d42d0428f24076b1b4bedc, type: 3}
+  m_PrefabInstance: {fileID: 2800138883173394008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &466183451423335947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3034720999393336073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d352ff1a1539475459dd34f930b9d347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterPrefab: {fileID: 3034720999393336073}
+  delaySpread: 0.03
+  gridSize: 1
+  materialTanahHijau: {fileID: -6478536213147159724, guid: 0a129a0eafe88274290d7cb8b2524567, type: 3}
+  radiusPenghijauan: 2.1

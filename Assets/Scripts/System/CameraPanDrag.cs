@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraPanDrag : MonoBehaviour
@@ -17,15 +18,15 @@ public class CameraPanDrag : MonoBehaviour
     public float zoomSmoothSpeed = 10f; // Efek empuk saat nge-zoom
     private float targetZoom; // Menyimpan ukuran tujuan akhir zoom
 
-    private Camera cam;
+    public CinemachineCamera cam;
 
     void Awake()
     {
-        cam = GetComponent<Camera>();
+        // cam = GetComponent<CinemachineCamera>();
 
         // Saat mulai, target posisi dan zoom disamakan dengan posisi asli agar tidak loncat
         targetPosition = transform.position;
-        targetZoom = cam.orthographicSize;
+        targetZoom = cam.Lens.OrthographicSize;
     }
 
     void Update()
@@ -54,7 +55,7 @@ public class CameraPanDrag : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
 
         // 2. Secara perlahan mengubah ukuran layar menuju targetZoom
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, zoomSmoothSpeed * Time.deltaTime);
+        cam.Lens.OrthographicSize = Mathf.Lerp(cam.Lens.OrthographicSize, targetZoom, zoomSmoothSpeed * Time.deltaTime);
     }
 
     void Zoom()
@@ -71,7 +72,7 @@ public class CameraPanDrag : MonoBehaviour
 
     void DragCam()
     {
-        if (Input.GetMouseButtonDown(0))
+       if (Input.GetMouseButtonDown(0))
         {
             dragOrigin = Input.mousePosition;
             return;
@@ -79,11 +80,13 @@ public class CameraPanDrag : MonoBehaviour
 
         if (!Input.GetMouseButton(0)) return;
 
-        Vector3 pos = cam.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+        // Gunakan Camera.main untuk menerjemahkan posisi layar, karena Cinemachine tidak punya layar
+        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
         Vector3 move = new Vector3(-pos.x * panSpeed, 0, -pos.y * panSpeed);
+        
+        // Sesuaikan arah gerak dengan rotasi Y kamera agar gesernya gak kebalik pas diputar
         move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * move;
 
-        // ALIH-ALIH MENGGERAKKAN KAMERA LANGSUNG, KITA TAMBAHKAN PERGERAKAN KE TARGET
         targetPosition += move;
 
         dragOrigin = Input.mousePosition;
